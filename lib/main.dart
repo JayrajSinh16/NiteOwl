@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:niteowl/colors.dart';
+import 'package:niteowl/features/landing/screens/landing_screen.dart';
 import 'package:niteowl/firebase_options.dart';
+import 'package:niteowl/routes.dart';
 import 'package:niteowl/screens/mobile_layout_screen.dart';
 import 'package:niteowl/screens/web_layout_screen.dart';
 import 'package:niteowl/utils/responsive_layout.dart';
@@ -24,11 +26,12 @@ class MyApp extends StatelessWidget {
       title: 'NiteOwl',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: backgroundColor,
+        appBarTheme: const AppBarTheme(
+          color: appBarColor,
+        ),
       ),
-      home: const ResponsiveLayout(
-        mobileScreenLayout: MobileLayoutScreen(),
-        webScreenLayout: WebLayoutScreen(),
-      ),
+      onGenerateRoute: (settings) => generateRoute(settings),
+      home: const LandingScreen(),
     );
   }
 }
