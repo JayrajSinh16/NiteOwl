@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217935880277",
+    "project_id": "niteowl-1616",
+    "storage_bucket": "niteowl-1616.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217935880277:android:9fc949aba0bc174506b4dc",
+        "android_client_info": {
+          "package_name": "com.example.niteowl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUhWcT6Y_vVZ5xuthyMLF6Wlg8pSpykxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
