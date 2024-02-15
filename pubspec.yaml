@@ -40,6 +40,8 @@ dependencies:
   firebase_storage: ^11.6.5
   firebase_core: ^2.25.4
   country_picker: ^2.0.24
+  riverpod: ^2.5.0
+  flutter_riverpod: ^2.4.10
 
 dev_dependencies:
   flutter_test:
