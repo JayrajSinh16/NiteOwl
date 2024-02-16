@@ -3,6 +3,7 @@ import 'package:niteowl/common/widgets/error.dart';
 import 'package:niteowl/features/auth/screens/login_screen.dart';
 import 'package:niteowl/features/auth/screens/otp_screen.dart';
 import 'package:niteowl/features/auth/screens/user_infomation_screen.dart';
+import 'package:niteowl/features/select_contacts/screens/select_contacts_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -20,6 +21,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case UserInformationScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const UserInformationScreen(),
+      );
+    case SelectContactScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const SelectContactScreen(),
       );
 
     default:

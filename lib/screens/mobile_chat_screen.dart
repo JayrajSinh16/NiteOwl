@@ -4,6 +4,7 @@ import 'package:niteowl/info.dart';
 import 'package:niteowl/widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
+  static const String routeName = '/mobile-chat-screen';
   const MobileChatScreen({Key? key}) : super(key: key);
 
   @override
