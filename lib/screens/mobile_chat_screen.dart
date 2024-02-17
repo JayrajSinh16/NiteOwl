@@ -4,16 +4,27 @@ import 'package:niteowl/info.dart';
 import 'package:niteowl/widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
+  final String name;
+  final String uid;
   static const String routeName = '/mobile-chat-screen';
-  const MobileChatScreen({Key? key}) : super(key: key);
+
+  const MobileChatScreen({
+    Key? key,
+    required this.name,
+    required this.uid,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded),
+          onPressed: () => Navigator.pop(context),
+        ),
         backgroundColor: appBarColor,
         title: Text(
-          info[0]['name'].toString(),
+          name,
         ),
         centerTitle: false,
         actions: [
@@ -42,16 +53,28 @@ class MobileChatScreen extends StatelessWidget {
               fillColor: mobileChatBoxColor,
               prefixIcon: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Icon(Icons.emoji_emotions, color: Colors.grey,),
+                child: Icon(
+                  Icons.emoji_emotions,
+                  color: Colors.grey,
+                ),
               ),
-              suffixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              suffixIcon: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(Icons.camera_alt, color: Colors.grey,),
-                    Icon(Icons.attach_file, color: Colors.grey,),
-                    Icon(Icons.money, color: Colors.grey,),
+                  children: [
+                    Icon(
+                      Icons.camera_alt,
+                      color: Colors.grey,
+                    ),
+                    Icon(
+                      Icons.attach_file,
+                      color: Colors.grey,
+                    ),
+                    Icon(
+                      Icons.money,
+                      color: Colors.grey,
+                    ),
                   ],
                 ),
               ),

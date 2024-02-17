@@ -4,6 +4,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/models/user_model.dart';
+import 'package:niteowl/screens/mobile_chat_screen.dart';
 
 final selectContactsRepositoryProvider = Provider(
   (ref) => SelectContactRepository(
@@ -33,7 +34,7 @@ class SelectContactRepository {
 
   void selectContact(Contact selectedContact, BuildContext context) async {
     try {
-      var userCollection = await firestore.collection('user').get();
+      var userCollection = await firestore.collection('users').get();
 
       bool isFound = false;
 
@@ -43,11 +44,17 @@ class SelectContactRepository {
           ' ',
           '',
         );
+
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
+          Navigator.pushNamed(context, MobileChatScreen.routeName,arguments: {
+            'name': userData.name,
+            'uid':userData.uid,
+          },);
         }
       }
       if (!isFound) {
+        //print(selectedContact.phones[0].number);
         showSnackBar(
           context: context,
           content: 'This number does not exits on the Server!!',

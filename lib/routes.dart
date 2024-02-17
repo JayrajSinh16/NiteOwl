@@ -4,6 +4,7 @@ import 'package:niteowl/features/auth/screens/login_screen.dart';
 import 'package:niteowl/features/auth/screens/otp_screen.dart';
 import 'package:niteowl/features/auth/screens/user_infomation_screen.dart';
 import 'package:niteowl/features/select_contacts/screens/select_contacts_screen.dart';
+import 'package:niteowl/screens/mobile_chat_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -25,6 +26,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SelectContactScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => const SelectContactScreen(),
+      );
+    case MobileChatScreen.routeName:
+      final arguments = settings.arguments as Map<String, dynamic>;
+      final name = arguments['name'];
+      final uid = arguments['uid'];
+      return MaterialPageRoute(
+        builder: (context) => 
+          MobileChatScreen(name: name,uid: uid,),
       );
 
     default:

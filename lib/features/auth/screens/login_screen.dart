@@ -69,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                "WhatsApp will need to verify your phone number",
+                "NiteOwl will need to verify your phone number",
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
