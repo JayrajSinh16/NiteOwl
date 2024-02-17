@@ -26,10 +26,11 @@ class AuthRepository {
   });
 
   Future<UserModel?> getCurrentUserData() async {
-    var userData = await firestore.collection('users').doc(auth.currentUser?.uid).get();
-      UserModel? user;
+    var userData =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    UserModel? user;
 
-    if(userData.data() != null){
+    if (userData.data() != null) {
       user = UserModel.fromMap(userData.data()!);
     }
 
@@ -119,5 +120,13 @@ class AuthRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
+  }
+
+  Stream<UserModel> userData(String userId) {
+    return firestore.collection('users').doc(userId).snapshots().map(
+          (event) => UserModel.fromMap(
+            event.data()!,
+          ),
+        );
   }
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
+import 'package:niteowl/common/widgets/loader.dart';
+import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/info.dart';
+import 'package:niteowl/models/user_model.dart';
 import 'package:niteowl/widgets/chat_list.dart';
 
-class MobileChatScreen extends StatelessWidget {
+class MobileChatScreen extends ConsumerWidget {
   final String name;
   final String uid;
   static const String routeName = '/mobile-chat-screen';
@@ -15,7 +19,7 @@ class MobileChatScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -23,8 +27,27 @@ class MobileChatScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: appBarColor,
-        title: Text(
-          name,
+        title: StreamBuilder<UserModel>(
+          stream: ref.read(authControllerProvider).userDataById(uid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Loader();
+            }
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name),
+                Text(
+                  snapshot.data!.isOnline ? 'online' : '',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
         centerTitle: false,
         actions: [
