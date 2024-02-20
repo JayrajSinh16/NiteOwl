@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
 import 'package:niteowl/common/utils/utils.dart';
+import 'package:niteowl/info.dart';
 import 'package:niteowl/models/chat_contact.dart';
 import 'package:niteowl/models/message.dart';
 import 'package:niteowl/models/user_model.dart';
@@ -24,6 +25,36 @@ class ChatRepository {
     required this.firestore,
     required this.auth,
   });
+
+  Stream<List<ChatContact>> getChatContact() {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatContact> contacts = [];
+      for (var document in event.docs) {
+        var chatContact = ChatContact.fromMap(document.data());
+        var userData = await firestore
+            .collection('users')
+            .doc(chatContact.contactId)
+            .get();
+        var user = UserModel.fromMap(userData.data()!);
+
+        contacts.add(
+          ChatContact(
+              name: user.name,
+              profilePic: user.profilePic,
+              contactId: chatContact.contactId,
+              timeSent: chatContact.timeSent,
+              lastMessage: chatContact.lastMessage),
+        );
+      }
+
+      return contacts;
+    });
+  }
 
   void _saveDataToContactSubCollection(
     UserModel senderUserData,

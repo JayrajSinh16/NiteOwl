@@ -13,7 +13,7 @@ import 'package:niteowl/screens/mobile_layout_screen.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
-      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance),
+      auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance,),
 );
 
 class AuthRepository {
@@ -53,7 +53,7 @@ class AuthRepository {
         }),
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
   }
@@ -128,5 +128,11 @@ class AuthRepository {
             event.data()!,
           ),
         );
+  }
+
+   void setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline,
+    });
   }
 }

@@ -15,7 +15,7 @@ class UserInformationScreen extends ConsumerStatefulWidget {
 }
 
 class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
-  final nameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   File? image;
 
   @override
