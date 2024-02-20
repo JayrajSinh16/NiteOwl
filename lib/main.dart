@@ -7,7 +7,7 @@ import 'package:niteowl/common/widgets/loader.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/landing/screens/landing_screen.dart';
 import 'package:niteowl/firebase_options.dart';
-import 'package:niteowl/routes.dart';
+import 'package:niteowl/routes.dart'; 
 import 'package:niteowl/screens/mobile_layout_screen.dart';
 import 'package:niteowl/screens/web_layout_screen.dart';
 import 'package:niteowl/utils/responsive_layout.dart';

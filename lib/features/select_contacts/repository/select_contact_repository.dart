@@ -4,7 +4,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/models/user_model.dart';
-import 'package:niteowl/screens/mobile_chat_screen.dart';
+import 'package:niteowl/features/chat/screens/mobile_chat_screen.dart';
 
 final selectContactsRepositoryProvider = Provider(
   (ref) => SelectContactRepository(

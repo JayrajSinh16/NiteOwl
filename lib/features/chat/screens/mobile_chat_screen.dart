@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
 import 'package:niteowl/common/widgets/loader.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
-import 'package:niteowl/info.dart';
+import 'package:niteowl/features/chat/widgets/buttom_chat_field.dart';
 import 'package:niteowl/models/user_model.dart';
 import 'package:niteowl/widgets/chat_list.dart';
 
@@ -54,7 +54,7 @@ class MobileChatScreen extends ConsumerWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.video_call),
-          ),
+          ), 
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.call),
@@ -70,47 +70,8 @@ class MobileChatScreen extends ConsumerWidget {
           const Expanded(
             child: ChatList(),
           ),
-          TextField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: mobileChatBoxColor,
-              prefixIcon: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Icon(
-                  Icons.emoji_emotions,
-                  color: Colors.grey,
-                ),
-              ),
-              suffixIcon: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Icon(
-                      Icons.camera_alt,
-                      color: Colors.grey,
-                    ),
-                    Icon(
-                      Icons.attach_file,
-                      color: Colors.grey,
-                    ),
-                    Icon(
-                      Icons.money,
-                      color: Colors.grey,
-                    ),
-                  ],
-                ),
-              ),
-              hintText: 'Type a message!',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                borderSide: const BorderSide(
-                  width: 0,
-                  style: BorderStyle.none,
-                ),
-              ),
-              contentPadding: const EdgeInsets.all(10),
-            ),
+          ButtomChatField(
+            recieverUserId: uid,
           ),
         ],
       ),

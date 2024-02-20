@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:niteowl/colors.dart';
 import 'package:niteowl/info.dart';
-import 'package:niteowl/screens/mobile_chat_screen.dart';
+import 'package:niteowl/features/chat/screens/mobile_chat_screen.dart';
 
 class ContactsList extends StatelessWidget {
   const ContactsList({Key? key}) : super(key: key);
