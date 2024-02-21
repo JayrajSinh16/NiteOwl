@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/chat/repository/chat_repository.dart';
 import 'package:niteowl/models/chat_contact.dart';
+import 'package:niteowl/models/message.dart';
 
 final chatControllerProvider = Provider((ref) {
   final chatRepository = ref.watch(chatRepositoryProvider);
@@ -23,6 +24,9 @@ class ChatController {
 
   Stream<List<ChatContact>> chatContacts() {
     return chatRepository.getChatContact();
+  }
+  Stream<List<Message>> chatStream(String recieverUserId ){
+    return chatRepository.getChatStream(recieverUserId);
   }
 
   void sendTextMessage(

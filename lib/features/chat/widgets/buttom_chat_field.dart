@@ -26,7 +26,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
             widget.recieverUserId,
           );
       setState(() {
-        _messageController.text = ' ';
+        _messageController.text = "";
       });
     }
   }

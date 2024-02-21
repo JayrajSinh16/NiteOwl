@@ -61,3 +61,4 @@ class AuthController {
     authRepository.setUserState(isOnline);
   }
 }
+ 

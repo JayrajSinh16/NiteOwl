@@ -5,7 +5,7 @@ import 'package:niteowl/common/widgets/loader.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/chat/widgets/buttom_chat_field.dart';
 import 'package:niteowl/models/user_model.dart';
-import 'package:niteowl/widgets/chat_list.dart';
+import 'package:niteowl/features/chat/widgets/chat_list.dart';
 
 class MobileChatScreen extends ConsumerWidget {
   final String name;
@@ -67,8 +67,8 @@ class MobileChatScreen extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: ChatList(),
+           Expanded(
+            child: ChatList(recieverUserId: uid),
           ),
           ButtomChatField(
             recieverUserId: uid,
