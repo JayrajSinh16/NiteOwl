@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
@@ -58,14 +59,27 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
       );
     }
   }
+
   void selectVideo() async {
-    File? video= await pickVideoFromGallery(context);
+    File? video = await pickVideoFromGallery(context);
 
     if (video != null) {
       sendFileMessage(
         video,
         MessageEnum.video,
       );
+    }
+  }
+
+  void selectGIF() async {
+    final gif = await pickGIF(context);
+
+    if (gif != null) {
+      ref.read(chatControllerProvider).sendGIFMessage(
+            context,
+            gif.url,
+            widget.recieverUserId,
+          );
     }
   }
 
@@ -103,14 +117,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.emoji_emotions,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
+                        onPressed: selectGIF,
                         icon: const Icon(
                           Icons.gif,
                           color: Colors.grey,

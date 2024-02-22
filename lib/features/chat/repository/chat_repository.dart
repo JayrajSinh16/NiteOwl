@@ -213,6 +213,7 @@ class ChatRepository {
       );
     }
   }
+  
 
   void sendFileMessage({
     required BuildContext context,
@@ -275,6 +276,40 @@ class ChatRepository {
       );
       
 
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+  void sendGIFMessage({
+    required BuildContext context,
+    required String gifUrl,
+    required String recieverUserId,
+    required UserModel senderUser,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      UserModel? recieverUserData;
+
+      
+      var messageId = const Uuid().v1();
+
+      _saveDataToContactSubCollection(
+        senderUser,
+        recieverUserData!,
+        'GIF',
+        timeSent,
+        recieverUserId,
+      );
+
+      _saveMessageToMessageSubCollection(
+        recieverUserId: recieverUserId,
+        text: gifUrl,
+        timeSent: timeSent,
+        messageType: MessageEnum.gif,
+        messageId: messageId,
+        username: senderUser.name,
+        recieverUserName: recieverUserData.name,
+      );
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
