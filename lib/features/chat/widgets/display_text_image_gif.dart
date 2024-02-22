@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/features/chat/widgets/video_player_item.dart';
 
 class DisplayTextGIF extends StatelessWidget {
   final String message;
@@ -21,8 +22,12 @@ class DisplayTextGIF extends StatelessWidget {
               fontSize: 16,
             ),
           )
-        : CachedNetworkImage(
-            imageUrl: message,
-          );
+        : type == MessageEnum.video
+            ? VideoPlayerItem(
+                videoUrl: Uri.parse(message),
+              )
+            : CachedNetworkImage(
+                imageUrl: message,
+              );
   }
 }
