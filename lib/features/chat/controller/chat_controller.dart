@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:niteowl/common/enum/message_enums.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/chat/repository/chat_repository.dart';
 import 'package:niteowl/models/chat_contact.dart';
@@ -25,18 +28,40 @@ class ChatController {
   Stream<List<ChatContact>> chatContacts() {
     return chatRepository.getChatContact();
   }
-  Stream<List<Message>> chatStream(String recieverUserId ){
+
+  Stream<List<Message>> chatStream(String recieverUserId) {
     return chatRepository.getChatStream(recieverUserId);
   }
 
   void sendTextMessage(
-      BuildContext context, String text, String recieverUserId) {
+    BuildContext context,
+    String text,
+    String recieverUserId,
+  ) {
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
             context: context,
             text: text,
             recieverUserId: recieverUserId,
             senderUser: value!,
+          ),
+        );
+  }
+
+  void sendFileMessage(
+    BuildContext context,
+    File file,
+    String recieverUserId,
+    MessageEnum messageenum,
+  ) {
+    ref.read(userDataAuthProvider).whenData(
+          (value) => chatRepository.sendFileMessage(
+            context: context,
+            file: file,
+            recieverUserId: recieverUserId,
+            senderUserData: value!,
+            ref: ref,
+            messageEnum: messageenum,
           ),
         );
   }

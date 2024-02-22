@@ -4,8 +4,6 @@ import 'package:niteowl/info.dart';
 import 'package:niteowl/features/chat/widgets/chat_list.dart';
 import 'package:niteowl/widgets/web_chat_appbar.dart';
 import 'package:niteowl/features/chat/widgets/contacts_list.dart';
-import 'package:niteowl/widgets/my_message_card.dart';
-import 'package:niteowl/widgets/senders_message_card.dart';
 import 'package:niteowl/widgets/web_profile_bar.dart';
 import 'package:niteowl/widgets/web_search_bar.dart';
 

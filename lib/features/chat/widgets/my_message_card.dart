@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:niteowl/colors.dart';
+import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/features/chat/widgets/display_text_image_gif.dart';
 
 class MyMessageCard extends StatelessWidget {
   final String message;
   final String date;
+  final MessageEnum type;
 
-  const MyMessageCard({Key? key, required this.message, required this.date}) : super(key: key);
+  const MyMessageCard({
+    Key? key,
+    required this.message,
+    required this.date,
+    required this.type,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +31,22 @@ class MyMessageCard extends StatelessWidget {
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                padding: type == MessageEnum.text
+                    ? const EdgeInsets.only(
+                        left: 10,
+                        right: 30,
+                        top: 5,
+                        bottom: 20,
+                      )
+                    : const EdgeInsets.only(
+                        left: 5,
+                        top: 1,
+                        right: 5,
+                        bottom: 25,
+                      ),
+                child: DisplayTextGIF(
+                  message: message,
+                  type: type,
                 ),
               ),
               Positioned(
@@ -43,7 +56,7 @@ class MyMessageCard extends StatelessWidget {
                   children: [
                     Text(
                       date,
-                      style:const TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white60,
                       ),

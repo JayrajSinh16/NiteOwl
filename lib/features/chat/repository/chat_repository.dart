@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/common/repositories/common_firebase_storage_repository.dart';
 import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/models/chat_contact.dart';
 import 'package:niteowl/models/message.dart';
@@ -61,7 +64,8 @@ class ChatRepository {
         .doc(auth.currentUser!.uid)
         .collection('chats')
         .doc(recieverUserId)
-        .collection('messages').orderBy("timeSent")
+        .collection('messages')
+        .orderBy("timeSent")
         .snapshots()
         .map((event) {
       List<Message> messages = [];
@@ -207,6 +211,72 @@ class ChatRepository {
         context: context,
         content: e.toString(),
       );
+    }
+  }
+
+  void sendFileMessage({
+    required BuildContext context,
+    required File file,
+    required String recieverUserId,
+    required UserModel senderUserData,
+    required ProviderRef ref,
+    required MessageEnum messageEnum,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      var messageId = const Uuid().v1();
+
+      String imageUrl = await ref
+          .read(commonFirebaseStorageRepositoryProvider)
+          .storeFileToFirebase(
+            'chat/${messageEnum.type}/${senderUserData.uid}/$recieverUserId/$messageId',
+            file,
+          );
+      UserModel recieverUserData;
+      var userDataMap =
+          await firestore.collection('users').doc(recieverUserId).get();
+      recieverUserData = UserModel.fromMap(userDataMap.data()!);
+
+      String contactMsg;
+
+      switch (messageEnum) {
+        case MessageEnum.image:
+          contactMsg = ' 📷 Photo ';
+          break;
+        case MessageEnum.video:
+          contactMsg = 'Video';
+          break;
+        case MessageEnum.audio:
+          contactMsg = 'Audio';
+          break;
+        case MessageEnum.gif:
+          contactMsg = 'gif';
+          break;
+        default:
+          contactMsg = 'GIF';
+      }
+
+      _saveDataToContactSubCollection(
+        senderUserData,
+        recieverUserData,
+        contactMsg,
+        timeSent,
+        recieverUserId,
+      );
+
+      _saveMessageToMessageSubCollection(
+        recieverUserId: recieverUserId,
+        text: imageUrl,
+        timeSent: timeSent,
+        messageId: messageId,
+        username: senderUserData.name,
+        recieverUserName: recieverUserData.name,
+        messageType: messageEnum,
+      );
+      
+
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
     }
   }
 }

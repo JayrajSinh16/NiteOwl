@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
+import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/features/chat/controller/chat_controller.dart';
+import 'package:niteowl/models/message.dart';
 
 class ButtomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -28,6 +33,29 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
       setState(() {
         _messageController.text = "";
       });
+    }
+  }
+
+  void sendFileMessage(
+    File file,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(chatControllerProvider).sendFileMessage(
+          context,
+          file,
+          widget.recieverUserId,
+          messageEnum,
+        );
+  }
+
+  void selectImage() async {
+    File? image = await pickImageFromGallery(context);
+
+    if (image != null) {
+      sendFileMessage(
+        image,
+        MessageEnum.image,
+      );
     }
   }
 
@@ -88,7 +116,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: selectImage,
                       icon: const Icon(
                         Icons.camera_alt,
                         color: Colors.grey,
