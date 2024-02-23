@@ -48,8 +48,8 @@ dependencies:
   intl: ^0.19.0
   cached_network_image: ^3.3.1
   video_player: ^2.8.2
-  enough_giphy_flutter: ^0.4.1
   flutter_platform_widgets: ^3.3.5
+  giphy_picker: ^3.0.1
 
 dev_dependencies:
   flutter_test:

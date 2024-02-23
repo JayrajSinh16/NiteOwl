@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
 import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/features/chat/controller/chat_controller.dart';
-import 'package:niteowl/models/message.dart';
 
 class ButtomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
@@ -77,7 +75,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
     if (gif != null) {
       ref.read(chatControllerProvider).sendGIFMessage(
             context,
-            gif.url,
+            gif.url!,
             widget.recieverUserId,
           );
     }

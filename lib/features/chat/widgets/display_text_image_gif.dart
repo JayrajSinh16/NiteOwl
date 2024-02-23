@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:giphy_picker/giphy_picker.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
 import 'package:niteowl/features/chat/widgets/video_player_item.dart';
 
