@@ -131,7 +131,7 @@ class ChatRepository {
   void _saveMessageToMessageSubCollection({
     required String recieverUserId,
     required String text,
-    required DateTime timeSent, 
+    required DateTime timeSent,
     required String messageId,
     required String username,
     required recieverUserName,
@@ -299,13 +299,12 @@ class ChatRepository {
     }
   }
 
-  void sendGIFMessage({
-    required BuildContext context,
-    required String gifUrl,
-    required String recieverUserId,
-    required UserModel senderUser,
-    required MessageReply? messageReply
-  }) async {
+  void sendGIFMessage(
+      {required BuildContext context,
+      required String gifUrl,
+      required String recieverUserId,
+      required UserModel senderUser,
+      required MessageReply? messageReply}) async {
     try {
       var timeSend = DateTime.now();
       UserModel recieverUserData;
@@ -338,6 +337,41 @@ class ChatRepository {
         repliedMessageType:
             messageReply == null ? MessageEnum.text : messageReply.messageEnum,
       );
+    } catch (e) {
+      showSnackBar(
+        context: context,
+        content: e.toString(),
+      );
+    }
+  }
+
+  void setChatMessageSeen(
+    BuildContext context,
+    String recieverUserId,
+    String messageId,
+  ) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(recieverUserId)
+          .collection('messages')
+          .doc(messageId)
+          .update({
+        'isSeen': true,
+      });
+
+      await firestore
+          .collection('users')
+          .doc(recieverUserId)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .update({
+        'isSeen': true,
+      });
     } catch (e) {
       showSnackBar(
         context: context,
