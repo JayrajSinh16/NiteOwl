@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/common/providers/message_reply.dart';
 import 'package:niteowl/common/widgets/loader.dart';
 import 'package:niteowl/features/chat/controller/chat_controller.dart';
 import 'package:niteowl/features/chat/widgets/my_message_card.dart';
@@ -24,6 +26,20 @@ class _ChatListState extends ConsumerState<ChatList> {
   void dispose() {
     super.dispose();
     messageController.dispose();
+  }
+
+  void onMessageSwipe(
+    String message,
+    bool isMe,
+    MessageEnum messageEnum,
+  ) {
+    ref.read(messageReplyProvider.state).update(
+          (state) => MessageReply(
+            message,
+            isMe,
+            messageEnum,
+          ),
+        );
   }
 
   @override
@@ -49,14 +65,31 @@ class _ChatListState extends ConsumerState<ChatList> {
                   FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(
                   message: messageData.text,
+                  repliedMessageType: messageData.repliedMessageType,
                   date: timeSent,
                   type: messageData.type,
+                  username: messageData.repliedTo,
+                  repliedText: messageData.repliedMessage,
+                  onLeftSwipe: () => onMessageSwipe(
+                    messageData.text,
+                    true,
+                    messageData.type,
+                  ),
+                  isSeen: messageData.isSeen,
                 );
               }
               return SenderMessageCard(
                 message: messageData.text,
                 date: timeSent,
                 type: messageData.type,
+                username: messageData.repliedTo,
+                repliedMessageType: messageData.repliedMessageType,
+                repliedText: messageData.repliedMessage,
+                onRightSwipe: () => onMessageSwipe(
+                  messageData.text,
+                  false,
+                  messageData.type,
+                ),
               );
             },
           );

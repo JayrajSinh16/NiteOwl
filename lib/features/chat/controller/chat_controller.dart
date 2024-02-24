@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/common/enum/message_enums.dart';
+import 'package:niteowl/common/providers/message_reply.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/chat/repository/chat_repository.dart';
 import 'package:niteowl/models/chat_contact.dart';
@@ -38,14 +39,16 @@ class ChatController {
     String text,
     String recieverUserId,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
-            context: context,
-            text: text,
-            recieverUserId: recieverUserId,
-            senderUser: value!,
-          ),
+              context: context,
+              text: text,
+              recieverUserId: recieverUserId,
+              senderUser: value!,
+              messageReply: messageReply),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendFileMessage(
@@ -54,16 +57,18 @@ class ChatController {
     String recieverUserId,
     MessageEnum messageenum,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
-            context: context,
-            file: file,
-            recieverUserId: recieverUserId,
-            senderUserData: value!,
-            ref: ref,
-            messageEnum: messageenum,
-          ),
+              context: context,
+              file: file,
+              recieverUserId: recieverUserId,
+              senderUserData: value!,
+              ref: ref,
+              messageEnum: messageenum,
+              messageReply: messageReply),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 
   void sendGIFMessage(
@@ -71,19 +76,20 @@ class ChatController {
     String gifUrl,
     String recieverUserId,
   ) {
-
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
     String newgifUrl = 'https://i.giphy.com/media/$gifUrlPart/200.gif';
-    print(newgifUrl);
 
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendGIFMessage(
             context: context,
             gifUrl: newgifUrl,
             recieverUserId: recieverUserId,
             senderUser: value!,
+            messageReply: messageReply,
           ),
         );
+    ref.read(messageReplyProvider.state).update((state) => null);
   }
 }

@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:niteowl/colors.dart';
 import 'package:niteowl/common/widgets/loader.dart';
 import 'package:niteowl/features/chat/controller/chat_controller.dart';
-import 'package:niteowl/info.dart';
 import 'package:niteowl/features/chat/screens/mobile_chat_screen.dart';
 import 'package:niteowl/models/chat_contact.dart';
 
