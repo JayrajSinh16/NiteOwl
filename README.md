@@ -32,5 +32,3 @@ NiteOwl is an advanced Flutter-based chat application that mirrors the functiona
 3. Run the application on your preferred device.
 
 Let's connect people with NiteOwl! 🚀📱💬
-
-This is a template for your README file. Feel free to modify it to suit your style and add any additional information you think is necessary.
