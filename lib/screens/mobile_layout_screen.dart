@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:niteowl/colors.dart';
 import 'package:niteowl/common/utils/utils.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
+import 'package:niteowl/features/group/screens/create_group_screen.dart';
 import 'package:niteowl/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:niteowl/features/chat/widgets/contacts_list.dart';
 import 'package:niteowl/features/status/screens/confirm_status.dart';
@@ -74,9 +75,22 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
               icon: const Icon(Icons.search, color: Colors.grey),
               onPressed: () {},
             ),
-            IconButton(
-              icon: const Icon(Icons.more_vert, color: Colors.grey),
-              onPressed: () {},
+            PopupMenuButton(
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.grey,
+              ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: const Text(
+                    'Create Group',
+                  ),
+                  onTap: () => Future(
+                    () => Navigator.pushNamed(
+                        context, CreateGroupScreen.routeName),
+                  ),
+                ),
+              ],
             ),
           ],
           bottom: TabBar(

@@ -5,6 +5,7 @@ import 'package:niteowl/common/widgets/error.dart';
 import 'package:niteowl/features/auth/screens/login_screen.dart';
 import 'package:niteowl/features/auth/screens/otp_screen.dart';
 import 'package:niteowl/features/auth/screens/user_infomation_screen.dart';
+import 'package:niteowl/features/group/screens/create_group_screen.dart';
 import 'package:niteowl/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:niteowl/features/chat/screens/mobile_chat_screen.dart';
 import 'package:niteowl/features/status/screens/confirm_status.dart';
@@ -55,6 +56,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => StatusScreen(
           status: status,
         ),
+      );
+    case CreateGroupScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const CreateGroupScreen(),
       );
 
     default:
