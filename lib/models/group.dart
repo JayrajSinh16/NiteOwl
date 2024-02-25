@@ -1,4 +1,4 @@
-class Group {
+class Group { 
   final String senderId;
   final String name;
   final String groupId;

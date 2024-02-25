@@ -11,11 +11,13 @@ import 'package:niteowl/features/chat/controller/chat_controller.dart';
 import 'package:niteowl/features/chat/widgets/message_reply_preview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+ 
 class ButtomChatField extends ConsumerStatefulWidget {
   final String recieverUserId;
+  final bool isGroupChat;
   const ButtomChatField({
     required this.recieverUserId,
+    required this.isGroupChat,
     super.key,
   });
 
@@ -55,6 +57,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
             context,
             _messageController.text.trim(),
             widget.recieverUserId,
+            widget.isGroupChat,
           );
       setState(() {
         _messageController.text = "";
@@ -91,6 +94,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
           file,
           widget.recieverUserId,
           messageEnum,
+          widget.isGroupChat,
         );
   }
 
@@ -124,6 +128,7 @@ class _ButtomChatFieldState extends ConsumerState<ButtomChatField> {
             context,
             gif.url!,
             widget.recieverUserId,
+            widget.isGroupChat,
           );
     }
   }

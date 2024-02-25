@@ -7,6 +7,7 @@ import 'package:niteowl/common/providers/message_reply.dart';
 import 'package:niteowl/features/auth/controller/auth_controller.dart';
 import 'package:niteowl/features/chat/repository/chat_repository.dart';
 import 'package:niteowl/models/chat_contact.dart';
+import 'package:niteowl/models/group.dart';
 import 'package:niteowl/models/message.dart';
 
 final chatControllerProvider = Provider((ref) {
@@ -30,23 +31,34 @@ class ChatController {
     return chatRepository.getChatContact();
   }
 
+  Stream<List<Group>> chatGroups() {
+    return chatRepository.getChatGroups();
+  }
+
   Stream<List<Message>> chatStream(String recieverUserId) {
     return chatRepository.getChatStream(recieverUserId);
+  }
+
+  Stream<List<Message>> groupChatStream(String groupId) {
+    return chatRepository.getGroupChatStream(groupId);
   }
 
   void sendTextMessage(
     BuildContext context,
     String text,
     String recieverUserId,
+    bool isGroupChat,
   ) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendTextMessage(
-              context: context,
-              text: text,
-              recieverUserId: recieverUserId,
-              senderUser: value!,
-              messageReply: messageReply),
+            context: context,
+            text: text,
+            recieverUserId: recieverUserId,
+            senderUser: value!,
+            messageReply: messageReply,
+            isGroupChat: isGroupChat,
+          ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
   }
@@ -56,17 +68,20 @@ class ChatController {
     File file,
     String recieverUserId,
     MessageEnum messageenum,
+    bool isGroupChat,
   ) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
           (value) => chatRepository.sendFileMessage(
-              context: context,
-              file: file,
-              recieverUserId: recieverUserId,
-              senderUserData: value!,
-              ref: ref,
-              messageEnum: messageenum,
-              messageReply: messageReply),
+            context: context,
+            file: file,
+            recieverUserId: recieverUserId,
+            senderUserData: value!,
+            ref: ref,
+            messageEnum: messageenum,
+            messageReply: messageReply,
+            isGroupChat: isGroupChat,
+          ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
   }
@@ -75,6 +90,7 @@ class ChatController {
     BuildContext context,
     String gifUrl,
     String recieverUserId,
+    bool isGroupChat,
   ) {
     int gifUrlPartIndex = gifUrl.lastIndexOf('-') + 1;
     String gifUrlPart = gifUrl.substring(gifUrlPartIndex);
@@ -88,6 +104,7 @@ class ChatController {
             recieverUserId: recieverUserId,
             senderUser: value!,
             messageReply: messageReply,
+            isGroupChat: isGroupChat,
           ),
         );
     ref.read(messageReplyProvider.state).update((state) => null);
